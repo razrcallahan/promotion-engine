@@ -1,7 +1,10 @@
 package com.demo.promotion.domain.promotions;
 
+import com.demo.promotion.domain.CartProducts;
 import com.demo.promotion.domain.Product;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class SingleProductBundle implements Promotion {
@@ -17,7 +20,15 @@ public class SingleProductBundle implements Promotion {
     }
 
     @Override
-    public Double apply() {
-        return 0.0;
+    public Double apply(List<CartProducts> cartProducts) {
+        return cartProducts.stream()
+                .filter(p -> p.getProduct().getSkuId().equals(product.getSkuId()))
+                .mapToDouble(p -> {
+                    int totalBundles = (int) p.getQuantity() / bundleQuantity;
+                    int remaining = p.getQuantity() - (totalBundles * bundleQuantity);
+
+                    return  (totalBundles * this.getPrice()) + (remaining * product.getPrice());
+                })
+                .sum();
     }
 }

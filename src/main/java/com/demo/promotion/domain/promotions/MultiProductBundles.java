@@ -1,5 +1,6 @@
 package com.demo.promotion.domain.promotions;
 
+import com.demo.promotion.domain.CartProducts;
 import com.demo.promotion.domain.Product;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class MultiProductBundles implements Promotion {
     }
 
     @Override
-    public Double apply() {
-        return 0.0;
+    public Double apply(List<CartProducts> cartProducts) {
+        return price;
     }
 }

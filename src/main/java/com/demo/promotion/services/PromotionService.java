@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public class PromotionService {
     public void applyPromotions(Cart cart, List<Promotion> applicablePromotions) {
-        cart.setNetPrice(applicablePromotions.stream().mapToDouble(Promotion::apply).sum());
+        cart.setNetPrice(applicablePromotions.stream()
+                .mapToDouble(p -> p.apply(cart.getProductList()))
+                .sum());
     }
 }

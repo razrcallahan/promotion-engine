@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -41,7 +42,7 @@ public class PromotionServiceTest {
 
     @Test
     public void whenAppliedPromotion_CartPriceIsUpdated() {
-        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 3));
+        List<CartProducts> cartProducts = Collections.singletonList(new CartProducts(productA, 3));
         Cart cart = new Cart(cartProducts);
         cart.setNetPrice(productA.getPrice() * 3); //150
 
