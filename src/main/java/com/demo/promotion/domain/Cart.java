@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class Cart {
-    private final List<Product> productList;
+    private final List<CartProducts> productList;
     private Double netPrice;
 }

@@ -7,9 +7,9 @@ import java.util.List;
 public class MultiProductBundles implements Promotion {
 
     List<Product> productList;
-    Float price;
+    Double price;
 
-    public MultiProductBundles(List<Product> productList, Float price) {
+    public MultiProductBundles(List<Product> productList, Double price) {
         this.productList = productList;
         this.price = price;
     }

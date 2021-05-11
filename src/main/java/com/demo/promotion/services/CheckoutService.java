@@ -13,7 +13,7 @@ public class CheckoutService {
     private void checkout(Cart cart) {
 
         // .. applying promotions
-        promotionService.applyPromotion(cart);
+        promotionService.applyPromotions(cart);
 
         // .. shipping
         // .. payment

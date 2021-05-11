@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 public class SingleProductBundle implements Promotion {
 
-    Float price;
+    Double price;
     Product product;
     Integer bundleQuantity;
 
-    public SingleProductBundle(Product product, Integer bundleQuantity, Float price) {
+    public SingleProductBundle(Product product, Integer bundleQuantity, Double price) {
         this.product = product;
         this.bundleQuantity = bundleQuantity;
         this.price = price;
