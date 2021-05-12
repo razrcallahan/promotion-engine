@@ -28,7 +28,7 @@ public class SingleProductBundle implements Promotion {
     /**
      * Implementation of the promotion for single product bundles
      *
-     * @param cartProducts cart product object
+     * @param cartProducts list of cartProducts
      * @return total sum after applying the promotion
      */
     @Override
