@@ -13,6 +13,12 @@ public class SingleProductBundle implements Promotion {
     Product product;
     Integer bundleQuantity;
 
+    /**
+     * Constructor to create a single product bundle promotion
+     * @param product product object
+     * @param bundleQuantity minimum number of products needed to make a bundle
+     * @param price price for the bundle
+     */
     public SingleProductBundle(Product product, Integer bundleQuantity, Double price) {
         this.product = product;
         this.bundleQuantity = bundleQuantity;
@@ -20,9 +26,10 @@ public class SingleProductBundle implements Promotion {
     }
 
     /**
+     * Implementation of the promotion for single product bundles
      *
-     * @param cartProducts
-     * @return total sum
+     * @param cartProducts cart product object
+     * @return total sum after applying the promotion
      */
     @Override
     public Double apply(List<CartProduct> cartProducts) {
