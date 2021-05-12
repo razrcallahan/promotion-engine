@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 public class Cart {
-    private final List<CartProducts> productList;
+    private final List<CartProduct> productList;
     private Double netPrice;
 }

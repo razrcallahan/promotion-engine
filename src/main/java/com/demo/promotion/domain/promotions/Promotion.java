@@ -1,9 +1,9 @@
 package com.demo.promotion.domain.promotions;
 
-import com.demo.promotion.domain.CartProducts;
+import com.demo.promotion.domain.CartProduct;
 
 import java.util.List;
 
 public interface Promotion {
-    Double apply(List<CartProducts> cartProducts);
+    Double apply(List<CartProduct> cartProducts);
 }

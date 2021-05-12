@@ -1,7 +1,7 @@
 package com.demo.promotion.services;
 
 import com.demo.promotion.domain.Cart;
-import com.demo.promotion.domain.CartProducts;
+import com.demo.promotion.domain.CartProduct;
 import com.demo.promotion.domain.Product;
 import com.demo.promotion.domain.promotions.MultiProductBundles;
 import com.demo.promotion.domain.promotions.Promotion;
@@ -42,7 +42,7 @@ public class PromotionServiceTest {
 
     @Test
     public void whenAppliedPromotion_CartPriceIsUpdated() {
-        List<CartProducts> cartProducts = Collections.singletonList(new CartProducts(productA, 3));
+        List<CartProduct> cartProducts = Collections.singletonList(new CartProduct(productA, 3));
         Cart cart = new Cart(cartProducts);
         cart.setNetPrice(productA.getPrice() * 3); //150
 
@@ -53,7 +53,7 @@ public class PromotionServiceTest {
 
     @Test
     public void whenAppliedSingleProductPromotion_CarPriceIsUpdated() {
-        List<CartProducts> cartProducts = Collections.singletonList(new CartProducts(productA, 3));
+        List<CartProduct> cartProducts = Collections.singletonList(new CartProduct(productA, 3));
         Cart cart = new Cart(cartProducts);
         cart.setNetPrice(productA.getPrice() * 3); //150
 

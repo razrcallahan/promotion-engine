@@ -1,6 +1,6 @@
 package com.demo.promotion.domain.promotions;
 
-import com.demo.promotion.domain.CartProducts;
+import com.demo.promotion.domain.CartProduct;
 import com.demo.promotion.domain.Product;
 import lombok.Data;
 
@@ -25,7 +25,7 @@ public class SingleProductBundle implements Promotion {
      * @return total sum
      */
     @Override
-    public Double apply(List<CartProducts> cartProducts) {
+    public Double apply(List<CartProduct> cartProducts) {
         return cartProducts.stream()
                 .filter(p -> p.getProduct().equals(product))
                 .filter(p -> !p.getPromotionApplied())

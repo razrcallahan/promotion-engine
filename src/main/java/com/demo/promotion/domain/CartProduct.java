@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Data
 @RequiredArgsConstructor
-public class CartProducts {
+public class CartProduct {
 
     @NonNull
     private Product product;

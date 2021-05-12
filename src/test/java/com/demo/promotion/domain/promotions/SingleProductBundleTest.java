@@ -1,7 +1,7 @@
 package com.demo.promotion.domain.promotions;
 
 
-import com.demo.promotion.domain.CartProducts;
+import com.demo.promotion.domain.CartProduct;
 import com.demo.promotion.domain.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class SingleProductBundleTest {
     @Test
     void whenCartHasRightQuantity_applyBundle() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
-        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 3));
+        List<CartProduct> cartProducts = Arrays.asList(new CartProduct(productA, 3));
 
         Assertions.assertEquals(130.0, cut.apply(cartProducts));
     }
@@ -29,7 +29,7 @@ public class SingleProductBundleTest {
     @Test
     void whenCartHasLessQuantity_bundleNotApplied() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
-        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 2));
+        List<CartProduct> cartProducts = Arrays.asList(new CartProduct(productA, 2));
 
         Assertions.assertEquals(100.0, cut.apply(cartProducts));
     }
@@ -37,7 +37,7 @@ public class SingleProductBundleTest {
     @Test
     void whenCartHasMoreQuantity_bundleMultiple() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
-        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 6));
+        List<CartProduct> cartProducts = Arrays.asList(new CartProduct(productA, 6));
 
         Assertions.assertEquals(260.0, cut.apply(cartProducts));
     }
@@ -45,7 +45,7 @@ public class SingleProductBundleTest {
     @Test
     void whenCartHasMoreQuantity_bundleMultipleWithRemaining() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
-        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 8));
+        List<CartProduct> cartProducts = Arrays.asList(new CartProduct(productA, 8));
 
         Assertions.assertEquals(360.0, cut.apply(cartProducts));
     }
@@ -54,7 +54,7 @@ public class SingleProductBundleTest {
     @Test
     void whenCartHasDifferentProduct_bundleNotApplied() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
-        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productB, 3));
+        List<CartProduct> cartProducts = Arrays.asList(new CartProduct(productB, 3));
 
         Assertions.assertEquals(0.0, cut.apply(cartProducts));
     }
