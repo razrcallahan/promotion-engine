@@ -48,7 +48,7 @@ public class PromotionServiceTest {
 
         promotionService.applyPromotions(cart, promotionList);
 
-        Assertions.assertNotEquals(cart.getNetPrice(), 150.0);
+        Assertions.assertNotEquals( 150.0, cart.getNetPrice());
     }
 
     @Test
@@ -62,18 +62,58 @@ public class PromotionServiceTest {
         Assertions.assertEquals(130.0, cart.getNetPrice());
     }
 
-    /*@Test
+    @Test
     public void whenAppliedMultiProductPromotion_CarPriceIsUpdated() {
-        List<CartProducts> cartProducts = Arrays.asList(
-                new CartProducts(productC, 1),
-                new CartProducts(productD, 1)
+        List<CartProduct> cartProducts = Arrays.asList(
+                new CartProduct(productC, 1),
+                new CartProduct(productD, 1)
         );
 
         Cart cart = new Cart(cartProducts);
-        cart.setNetPrice(productC.getPrice() + productC.getPrice()); //35
+        cart.setNetPrice(productC.getPrice() + productD.getPrice()); //35
 
         promotionService.applyPromotions(cart, promotionList);
 
-        Assertions.assertEquals(cart.getNetPrice(), 30.0);
-    }*/
+        Assertions.assertEquals(30.0, cart.getNetPrice());
+    }
+
+    @Test
+    public void whenSingleBundlePromotionIsFirst_OnlySingleBundleIsApplied() {
+        promotionList = Arrays.asList(
+                new SingleProductBundle(productA, 3, 130.0),
+                new MultiProductBundles(Arrays.asList(productA, productC), 60.0)
+        );
+
+        List<CartProduct> cartProducts = Arrays.asList(
+                new CartProduct(productA, 3),
+                new CartProduct(productC, 1)
+        );
+
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(170.0); //170
+
+        promotionService.applyPromotions(cart, promotionList);
+
+        Assertions.assertEquals(150.0, cart.getNetPrice());
+    }
+
+    @Test
+    public void whenMultiBundlePromotionIsFirst_OnlyMultiBundleIsApplied() {
+        promotionList = Arrays.asList(
+                new MultiProductBundles(Arrays.asList(productA, productC), 60.0),
+                new SingleProductBundle(productA, 3, 130.0)
+        );
+
+        List<CartProduct> cartProducts = Arrays.asList(
+                new CartProduct(productA, 3),
+                new CartProduct(productC, 1)
+        );
+
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(170.0); //170
+
+        promotionService.applyPromotions(cart, promotionList);
+
+        Assertions.assertEquals(160.0, cart.getNetPrice());
+    }
 }

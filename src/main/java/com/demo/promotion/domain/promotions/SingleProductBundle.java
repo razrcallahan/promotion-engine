@@ -33,6 +33,8 @@ public class SingleProductBundle implements Promotion {
                     int totalBundles = (int) p.getQuantity() / bundleQuantity;
                     int remaining = p.getQuantity() - (totalBundles * bundleQuantity);
 
+                    p.setPromotionApplied(Boolean.TRUE);
+
                     return  (totalBundles * this.getPrice()) + (remaining * product.getPrice());
                 })
                 .sum();
