@@ -6,10 +6,7 @@ import com.demo.promotion.domain.Product;
 import com.demo.promotion.domain.promotions.MultiProductBundles;
 import com.demo.promotion.domain.promotions.Promotion;
 import com.demo.promotion.domain.promotions.SingleProductBundle;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,13 +23,18 @@ public class PromotionServiceTest {
 
     private List<Promotion> promotionList;
 
-    Product productA = new Product("A", 50.0);
-    Product productB = new Product("B", 30.0);
-    Product productC = new Product("C", 20.0);
-    Product productD = new Product("D", 15.0);
+    Product productA;
+    Product productB;
+    Product productC;
+    Product productD;
 
     @BeforeAll
     void setup() {
+        productA = new Product("A", 50.0);
+        productB = new Product("B", 30.0);
+        productC = new Product("C", 20.0);
+        productD = new Product("D", 15.0);
+
         promotionList = Arrays.asList(
                 new SingleProductBundle(productA, 3, 130.0),
                 new SingleProductBundle(productB, 2, 45.0),
@@ -79,7 +81,7 @@ public class PromotionServiceTest {
 
     @Test
     public void whenSingleBundlePromotionIsFirst_OnlySingleBundleIsApplied() {
-        promotionList = Arrays.asList(
+        List<Promotion> updatedPromotionList =  Arrays.asList(
                 new SingleProductBundle(productA, 3, 130.0),
                 new MultiProductBundles(Arrays.asList(productA, productC), 60.0)
         );
@@ -92,14 +94,14 @@ public class PromotionServiceTest {
         Cart cart = new Cart(cartProducts);
         cart.setNetPrice(170.0); //170
 
-        promotionService.applyPromotions(cart, promotionList);
+        promotionService.applyPromotions(cart, updatedPromotionList);
 
         Assertions.assertEquals(150.0, cart.getNetPrice());
     }
 
     @Test
     public void whenMultiBundlePromotionIsFirst_OnlyMultiBundleIsApplied() {
-        promotionList = Arrays.asList(
+        List<Promotion> updatedPromotionList = Arrays.asList(
                 new MultiProductBundles(Arrays.asList(productA, productC), 60.0),
                 new SingleProductBundle(productA, 3, 130.0)
         );
@@ -112,8 +114,64 @@ public class PromotionServiceTest {
         Cart cart = new Cart(cartProducts);
         cart.setNetPrice(170.0); //170
 
-        promotionService.applyPromotions(cart, promotionList);
+        promotionService.applyPromotions(cart, updatedPromotionList);
 
         Assertions.assertEquals(160.0, cart.getNetPrice());
+    }
+
+    /**
+     * Tests specified in the requirement document
+     */
+
+    @Test
+    public void scenarioA() {
+        List<CartProduct> cartProducts = Arrays.asList(
+                new CartProduct(productA, 1),
+                new CartProduct(productB, 1),
+                new CartProduct(productC, 1)
+        );
+
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(50.0 + 30.0 + 20.0); //100
+
+        promotionService.applyPromotions(cart, promotionList);
+
+        Assertions.assertEquals(100.0, cart.getNetPrice());
+    }
+
+    @Test
+    public void scenarioB() {
+
+        List<CartProduct> cartProducts = Arrays.asList(
+                new CartProduct(productA, 5),
+                new CartProduct(productB, 5),
+                new CartProduct(productC, 1)
+        );
+
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(250.0 + 225.0 + 20); //503
+
+        promotionService.applyPromotions(cart, promotionList);
+
+
+        Assertions.assertEquals(370.0, cart.getNetPrice());
+    }
+
+    @Test
+    public void scenarioC() {
+        List<CartProduct> cartProducts = Arrays.asList(
+                new CartProduct(productA, 3),
+                new CartProduct(productB, 5),
+                new CartProduct(productC, 1),
+                new CartProduct(productD, 1)
+        );
+
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(150.0 + 225.0 + 0.0 + 30.0); //405
+
+        promotionService.applyPromotions(cart, promotionList);
+
+        // there is a calculation error in the document, the total has been calculated incorrect
+        Assertions.assertEquals(280.0, cart.getNetPrice());
     }
 }
