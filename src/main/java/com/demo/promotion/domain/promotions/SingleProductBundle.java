@@ -19,10 +19,16 @@ public class SingleProductBundle implements Promotion {
         this.price = price;
     }
 
+    /**
+     *
+     * @param cartProducts
+     * @return total sum
+     */
     @Override
     public Double apply(List<CartProducts> cartProducts) {
         return cartProducts.stream()
-                .filter(p -> p.getProduct().getSkuId().equals(product.getSkuId()))
+                .filter(p -> p.getProduct().equals(product))
+                .filter(p -> !p.getPromotionApplied())
                 .mapToDouble(p -> {
                     int totalBundles = (int) p.getQuantity() / bundleQuantity;
                     int remaining = p.getQuantity() - (totalBundles * bundleQuantity);

@@ -4,7 +4,6 @@ package com.demo.promotion.domain.promotions;
 import com.demo.promotion.domain.CartProducts;
 import com.demo.promotion.domain.Product;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,17 +16,10 @@ import java.util.List;
 public class SingleProductBundleTest {
 
     Product productA = new Product("A", 50.0);
-    private List<Promotion> promotionList;
-
-    @BeforeAll
-    void setup() {
-        promotionList = Arrays.asList(
-                new SingleProductBundle(productA, 3, 130.0)
-        );
-    }
+    Product productB = new Product("B", 30.0);
 
     @Test
-    void whenBundleHasRightQuantity_applyBundle() {
+    void whenCartHasRightQuantity_applyBundle() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
         List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 3));
 
@@ -35,7 +27,7 @@ public class SingleProductBundleTest {
     }
 
     @Test
-    void whenBundleHasLessQuantity_bundleNotApplied() {
+    void whenCartHasLessQuantity_bundleNotApplied() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
         List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 2));
 
@@ -43,7 +35,7 @@ public class SingleProductBundleTest {
     }
 
     @Test
-    void whenBundleHasMoreQuantity_bundleMultiple() {
+    void whenCartHasMoreQuantity_bundleMultiple() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
         List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 6));
 
@@ -51,11 +43,19 @@ public class SingleProductBundleTest {
     }
 
     @Test
-    void whenBundleHasMoreQuantity_bundleMultipleWithRemaining() {
+    void whenCartHasMoreQuantity_bundleMultipleWithRemaining() {
         SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
         List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productA, 8));
 
         Assertions.assertEquals(360.0, cut.apply(cartProducts));
     }
 
+
+    @Test
+    void whenCartHasDifferentProduct_bundleNotApplied() {
+        SingleProductBundle cut = new SingleProductBundle(productA, 3, 130.0);
+        List<CartProducts> cartProducts = Arrays.asList(new CartProducts(productB, 3));
+
+        Assertions.assertEquals(0.0, cut.apply(cartProducts));
+    }
 }

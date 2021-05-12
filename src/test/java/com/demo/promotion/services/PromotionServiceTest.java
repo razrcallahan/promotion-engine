@@ -48,6 +48,32 @@ public class PromotionServiceTest {
 
         promotionService.applyPromotions(cart, promotionList);
 
-        Assertions.assertEquals(cart.getNetPrice(), 130.0);
+        Assertions.assertNotEquals(cart.getNetPrice(), 150.0);
     }
+
+    @Test
+    public void whenAppliedSingleProductPromotion_CarPriceIsUpdated() {
+        List<CartProducts> cartProducts = Collections.singletonList(new CartProducts(productA, 3));
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(productA.getPrice() * 3); //150
+
+        promotionService.applyPromotions(cart, promotionList);
+
+        Assertions.assertEquals(130.0, cart.getNetPrice());
+    }
+
+    /*@Test
+    public void whenAppliedMultiProductPromotion_CarPriceIsUpdated() {
+        List<CartProducts> cartProducts = Arrays.asList(
+                new CartProducts(productC, 1),
+                new CartProducts(productD, 1)
+        );
+
+        Cart cart = new Cart(cartProducts);
+        cart.setNetPrice(productC.getPrice() + productC.getPrice()); //35
+
+        promotionService.applyPromotions(cart, promotionList);
+
+        Assertions.assertEquals(cart.getNetPrice(), 30.0);
+    }*/
 }

@@ -17,6 +17,9 @@ public class MultiProductBundles implements Promotion {
 
     @Override
     public Double apply(List<CartProducts> cartProducts) {
-        return price;
+        return productList.stream()
+                .mapToDouble(p -> {
+                    return p.getPrice();
+                }).sum();
     }
 }
